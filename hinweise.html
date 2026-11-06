@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hinweis geben · Bundesamt für Verfassungsschutz · fiktiv</title>
+  <meta name="description" content="Hinweise auf Terror, Spionage, Sabotage oder Cyberangriffe vertraulich an das Bundesamt für Verfassungsschutz geben (fiktiv, Rollenspiel).">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#07080a">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vs.css?v=1">
+</head>
+<body data-page="hinweise">
+  <main id="main">
+    <section class="page-head">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="container">
+        <nav class="crumbs" aria-label="Brotkrumen"><a href="index.html">Start</a> / Hinweis geben</nav>
+        <h1 class="reveal">Ihr Hinweis <span class="s">zählt.</span></h1>
+        <p class="reveal" style="--d:.05s">Viele Anschläge und Spionagefälle werden aufgedeckt, weil jemand etwas bemerkt hat. Hinweise behandelt das Bundesamt vertraulich.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container two">
+        <div>
+          <div class="notice reveal"><b>Akute Gefahr?</b> Rufen Sie sofort die Polizei über den Notruf 110. Das Bundesamt hat keine Polizeibefugnisse.</div>
+          <h2 style="font-size:1.8rem;margin:44px 0 10px">Wofür das Bundesamt zuständig ist</h2>
+          <ul class="list-plain">
+            <li><span><b>Anschlagspläne</b> oder Hinweise auf terroristische Gruppen</span></li>
+            <li><span><b>Anwerbeversuche</b> fremder Nachrichtendienste</span></li>
+            <li><span><b>Sabotage</b> an Bahn, Energie, Wasser oder Kommunikation</span></li>
+            <li><span><b>Cyberangriffe</b> auf Behörden oder kritische Infrastruktur</span></li>
+            <li><span><b>Gewaltbereite</b> extremistische Gruppen jeder Richtung</span></li>
+          </ul>
+          <h2 style="font-size:1.8rem;margin:44px 0 10px">Wofür nicht</h2>
+          <p class="muted">Meinungen, Parteimitgliedschaften oder politische Arbeit nicht verbotener Parteien sind kein Fall für den Verfassungsschutz (§ 16 Abs. 6 VSNOG).</p>
+        </div>
+        <form class="form reveal" data-rp style="--d:.05s" novalidate>
+          <div class="lage-head" style="margin:0"><span>Hinweisformular</span><span class="live">Vertraulich</span></div>
+          <label>Worum geht es?
+            <select name="art" required>
+              <option>Terrorismus</option><option>Spionage oder Sabotage</option><option>Cyberangriff</option><option>Gewaltbereiter Extremismus</option><option>Sonstiges</option>
+            </select>
+          </label>
+          <label>Was haben Sie beobachtet?<textarea name="text" placeholder="Was, wann, wo, wer? Je genauer, desto besser."></textarea></label>
+          <label>Rückmeldung (freiwillig)<input name="kontakt" placeholder="Name im Rollenspiel oder Discord-Name"></label>
+          <button class="btn btn-primary" type="submit" style="justify-self:start">Hinweis absenden</button>
+          <p class="form-done" role="status">Danke. Ihr Hinweis ist unter dem Aktenzeichen <b data-nr class="mono"></b> eingegangen.</p>
+          <p class="note">Rollenspiel: Dieses Formular übermittelt nichts und speichert nichts. Es zeigt nur eine Bestätigung an. Echte Hinweise auf Straftaten gehören an die echte Polizei.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script src="assets/vs.js?v=1"></script>
+</body>
+</html>

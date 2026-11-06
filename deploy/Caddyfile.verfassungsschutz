@@ -1,0 +1,20 @@
+# Block für den System-Caddy (/etc/caddy/Caddyfile) auf dem Server.
+# Statische Seite, kein Backend. HTTPS holt Caddy automatisch.
+verfassungsschutz.duckdns.org {
+	root * /opt/verfassungsschutz/site
+	encode zstd gzip
+	try_files {path} {path}.html
+	file_server
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'"
+		X-Robots-Tag "noindex, nofollow"
+		-Server
+	}
+	@static path /assets/*
+	header @static Cache-Control "public, max-age=604800"
+}
