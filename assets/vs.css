@@ -59,6 +59,7 @@ a:hover { color: #fff; text-decoration-color: var(--gold); }
 .site-header { position: sticky; top: 0; z-index: 100; background: rgb(7 8 10 / .74); backdrop-filter: saturate(160%) blur(18px); -webkit-backdrop-filter: saturate(160%) blur(18px); border-bottom: 1px solid var(--line); view-transition-name: kopf; }
 .head-row { display: flex; align-items: center; gap: 28px; min-height: 74px; }
 .logo { display: inline-flex; align-items: stretch; gap: 12px; text-decoration: none; color: var(--text); flex-shrink: 0; }
+.logo .emblem { width: 40px; height: 40px; align-self: center; flex-shrink: 0; }
 .logo .flag { display: flex; flex-direction: column; width: 3px; border-radius: 2px; overflow: hidden; }
 .logo .flag i { flex: 1; }
 .logo .flag i:nth-child(1) { background: #3a3a3a; }
