@@ -9,6 +9,8 @@
     ['amt.html', 'amt', 'Das Amt'],
     ['aufgaben.html', 'aufgaben', 'Arbeitsfelder'],
     ['vsnog.html', 'vsnog', 'VSNOG', true],
+    ['urteile.html', 'urteile', 'Urteile'],
+    ['einstufungen.html', 'einstufungen', 'Einstufungen'],
     ['presse.html', 'presse', 'Presse'],
     ['hinweise.html', 'hinweise', 'Hinweise']
   ];
@@ -21,11 +23,12 @@
     <div class="read-progress" aria-hidden="true"></div>
     <div class="rp-bar"><div class="container">
       <span><b>Fiktiv</b> · Rollenspiel „BDR: Bundesrepublik Deutschland RP“ (Roblox). Kein Angebot einer echten Behörde.</span>
-      <span class="day mono">${heute}</span>
+      <span class="rp-rechts"><span class="day mono">${heute}</span><a class="dienst-link" href="/dienst/">Dienstportal</a></span>
     </div></div>
     <header class="site-header"><div class="container head-row">
       <a class="logo" href="index.html" aria-label="Bundesamt für Verfassungsschutz, zur Startseite">
         <span class="flag" aria-hidden="true"><i></i><i></i><i></i></span>
+        <img class="wappen" src="assets/marke/wappen-animiert.svg" alt="" width="30" height="35">
         <span class="words">Bundesamt für<br>Verfassungsschutz<small>BfV · Köln · Berlin</small></span>
       </a>
       <nav class="mainnav" id="mainnav" aria-label="Hauptnavigation">${links}</nav>
@@ -39,13 +42,13 @@
     <footer class="footer"><div class="container">
       <div class="foot-grid">
         <div>
-          <a class="logo" href="index.html"><span class="flag" aria-hidden="true"><i></i><i></i><i></i></span>
+          <a class="logo" href="index.html"><span class="flag" aria-hidden="true"><i></i><i></i><i></i></span><img class="wappen" src="assets/marke/wappen.svg" alt="" width="30" height="35">
             <span class="words">Bundesamt für<br>Verfassungsschutz<small>Im Geschäftsbereich des BMIH</small></span></a>
           <p class="claim">Nachrichtendienst des Bundes für Terror-, Spionage- und Cyberabwehr. Unter der Fach- und Rechtsaufsicht des Bundesministeriums für Inneres und Heimat.</p>
         </div>
         <div><h4>Das Amt</h4><ul><li><a href="amt.html">Auftrag und Aufsicht</a></li><li><a href="amt.html#leitung">Amtsleitung</a></li><li><a href="amt.html#personal">Neuaufstellung</a></li><li><a href="aufgaben.html">Arbeitsfelder</a></li></ul></div>
-        <div><h4>Aktuell</h4><ul><li><a href="vsnog.html">VSNOG · Drs. 3/15</a></li><li><a href="vsnog.html#text">Gesetzestext</a></li><li><a href="presse.html">Pressemitteilungen</a></li><li><a href="presse.html#fotos">Pressefotos</a></li></ul></div>
-        <div><h4>Service</h4><ul><li><a href="hinweise.html">Hinweis geben</a></li><li><a href="https://bmibund.duckdns.org">BMIH (Ministerium)</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="impressum.html#datenschutz">Datenschutz</a></li></ul></div>
+        <div><h4>Aktuell</h4><ul><li><a href="vsnog.html">VSNOG · Drs. 3/15</a></li><li><a href="vsnog.html#text">Gesetzestext</a></li><li><a href="urteile.html">Urteile des BVerfG</a></li><li><a href="einstufungen.html">Einstufungen</a></li><li><a href="presse.html">Pressemitteilungen</a></li><li><a href="presse.html#fotos">Pressefotos</a></li></ul></div>
+        <div><h4>Service</h4><ul><li><a href="hinweise.html">Hinweis geben</a></li><li><a href="/dienst/">Dienstportal (intern)</a></li><li><a href="https://bmibund.duckdns.org">BMIH (Ministerium)</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="impressum.html#datenschutz">Datenschutz</a></li></ul></div>
       </div>
       <div class="foot-word" aria-hidden="true">Verfassungsschutz</div>
       <div class="foot-bottom">
@@ -148,4 +151,68 @@
     f.classList.add('sent');
     f.querySelector('button[type=submit]').disabled = true;
   }));
+  // Live-Daten aus dem Dienstportal: verkündete Entscheidungen, öffentliche Einstufungen, freigegebene Pressemitteilungen.
+  // Nur Text (textContent), nie HTML aus der Datenbank.
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const tagD = iso => iso ? new Date(iso).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '';
+  const anker = az => String(az).replace(/\s+/g, '-');
+  const absaetze = (ziel, text) => String(text || '').split(/\n{2,}/).forEach(t => ziel.append(el('p', null, t)));
+  const laden = async pfad => { const r = await fetch(pfad, { headers: { Accept: 'application/json' } }); if (!r.ok) throw new Error(r.status); return r.json(); };
+  const leerText = (box, text) => box.replaceChildren(el('p', 'lade leer', text));
+  const filtern = (name, box) => {
+    const f = document.querySelector(`[data-suche="${name}"]`);
+    if (!f) return;
+    f.addEventListener('input', () => { const q = f.value.trim().toLowerCase(); box.querySelectorAll('[data-text]').forEach(x => { x.hidden = !!q && !x.dataset.text.includes(q); }); });
+  };
+  const ERG = { 'stattgegeben': 'gold', 'teilweise stattgegeben': 'gold', 'zurückgewiesen': '', 'als unzulässig verworfen': 'red' };
+
+  const urteile = document.querySelector('[data-api="entscheidungen"]');
+  if (urteile) laden('/api/oeffentlich/entscheidungen').then(({ entscheidungen: l }) => {
+    if (!l.length) return leerText(urteile, 'Noch keine Entscheidung verkündet.');
+    urteile.replaceChildren(...l.map((v, i) => {
+      const e = v.entscheidung;
+      const a = el('article', 'urteil reveal in');
+      a.id = anker(v.az);
+      a.dataset.text = `${v.az} ${v.art} ${v.gegenstand} ${e.tenor} ${e.leitsatz || ''}`.toLowerCase();
+      a.style.setProperty('--d', `${Math.min(i, 6) * 0.05}s`);
+      const kopfZeile = el('header', 'urteil-kopf');
+      const az = el('a', 'az', v.az); az.href = `#${a.id}`;
+      kopfZeile.append(az, el('span', 'tag ' + (ERG[e.ergebnis] || ''), `${e.art}: ${e.ergebnis}`), el('time', 'mono', tagD(e.datum)));
+      const tenor = el('blockquote', 'tenor', e.tenor);
+      const gruende = el('details', 'gruende'); gruende.append(el('summary', null, 'Gründe lesen')); absaetze(gruende, e.gruende);
+      const fuss = el('footer', 'urteil-fuss');
+      fuss.append(el('span', null, `${v.senat}. Senat`), el('span', null, v.art), el('span', null, `Antragsteller: ${v.antragsteller || '–'}`), el('span', 'mono', `Stimmen ${e.stimmen}`));
+      a.append(kopfZeile, el('h3', null, v.gegenstand), e.leitsatz ? el('p', 'leitsatz', e.leitsatz) : '', tenor, gruende, fuss);
+      return a;
+    }));
+    filtern('entscheidungen', urteile);
+    if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+  }).catch(() => leerText(urteile, 'Die Entscheidungssammlung ist gerade nicht erreichbar.'));
+
+  const einst = document.querySelector('[data-api="einstufungen"]');
+  if (einst) laden('/api/oeffentlich/einstufungen').then(({ einstufungen: l }) => {
+    if (!l.length) return leerText(einst, 'Derzeit ist keine Einstufung öffentlich bekanntgegeben.');
+    einst.replaceChildren(...l.map(x => {
+      const r = el('article', 'einst reveal in');
+      r.dataset.text = `${x.name} ${x.stufe}`.toLowerCase();
+      const name = el('div', 'einst-name'); name.append(el('b', null, x.name || 'Unbekannt'), el('span', null, `seit ${tagD(x.seit)}`));
+      const tags = el('div', 'einst-tags'); tags.append(el('span', 'tag red', x.stufe));
+      if (x.gerichtlich) tags.append(el('span', 'tag gold', 'gerichtlich bestätigt'));
+      r.append(name, tags);
+      return r;
+    }));
+    filtern('einstufungen', einst);
+  }).catch(() => leerText(einst, 'Die Liste ist gerade nicht erreichbar.'));
+
+  const news = document.querySelector('[data-api="presse"]');
+  if (news) laden('/api/oeffentlich/presse').then(({ beitraege: l }) => {
+    news.prepend(...l.map(b => {
+      const a = el('article', 'news-item reveal in'); a.id = b.id;
+      const t = el('time', null, tagD(b.datum)); t.dateTime = (b.datum || '').slice(0, 10);
+      const d = el('div'); d.append(el('span', 'tag gold', b.kategorie), el('h3', null, b.titel)); absaetze(d, b.text);
+      a.append(t, d);
+      return a;
+    }));
+    if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+  }).catch(() => {});
 })();

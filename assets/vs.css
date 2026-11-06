@@ -448,3 +448,38 @@ a.card:hover, .card.lift:hover { border-color: var(--line-2); transform: transla
   .lage { padding: 20px; }
 }
 @media (min-width: 1101px) { .grid-3 > :last-child:nth-child(3n+1) { grid-column: 1 / -1; } }
+
+/* Wappen im Kopf und Dienstportal-Link */
+.logo .wappen { width: 30px; height: 35px; align-self: center; filter: drop-shadow(0 4px 10px rgb(0 0 0 / .6)); }
+.rp-rechts { display: inline-flex; align-items: center; gap: 16px; }
+.dienst-link { color: var(--text-2); text-decoration: none; font-weight: 500; padding: 3px 10px; border: 1px solid var(--line-2); border-radius: 99px; transition: border-color .2s, color .2s; }
+.dienst-link:hover { color: var(--text); border-color: var(--gold); }
+
+/* Urteile, Einstufungen (Live-Daten) */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.suchfeld input { width: min(320px, 80vw); padding: 11px 16px; border-radius: 99px; border: 1px solid var(--line-2); background: var(--bg-2); color: var(--text); font: inherit; }
+.suchfeld input:focus { outline: none; border-color: var(--gold); }
+.lade { color: var(--text-3); padding: 28px 0; display: flex; align-items: center; gap: 12px; }
+.lade:not(.leer)::before { content: ""; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--gold); border-right-color: transparent; animation: vs-dreh .8s linear infinite; }
+@keyframes vs-dreh { to { rotate: 360deg; } }
+.urteile { display: grid; gap: 18px; }
+.urteil { position: relative; padding: 30px 32px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); display: grid; gap: 14px; overflow: hidden; scroll-margin-top: 150px; }
+.urteil::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: linear-gradient(#3a3a3a 0 33%, var(--red) 33% 66%, var(--gold) 66%); transform-origin: top; animation: vs-balken 1s var(--ease) both; }
+@keyframes vs-balken { from { transform: scaleY(0); } }
+.urteil:target { border-color: rgb(233 196 106 / .5); }
+.urteil-kopf { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.urteil-kopf .az { font: 600 1.05rem var(--mono); color: var(--gold); text-decoration: none; letter-spacing: 0; }
+.urteil-kopf time { margin-left: auto; color: var(--text-3); }
+.urteil h3 { font-size: 1.35rem; }
+.urteil .leitsatz { color: var(--text-2); padding-left: 14px; border-left: 1px solid var(--line-2); }
+.urteil .tenor { margin: 0; font-family: var(--serif); font-size: 1.35rem; line-height: 1.45; color: var(--text); }
+.urteil .gruende summary { cursor: pointer; color: var(--text-2); font-size: .9rem; }
+.urteil .gruende p { margin-top: 12px; color: var(--text-2); white-space: pre-wrap; }
+.urteil-fuss { display: flex; flex-wrap: wrap; gap: 8px 20px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--text-3); font-size: .82rem; }
+.einst-liste { display: grid; border-top: 1px solid var(--line); }
+.einst { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.einst-name { display: grid; } .einst-name b { font-size: 1.15rem; font-weight: 600; } .einst-name span { color: var(--text-3); font-size: .84rem; }
+.einst-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.register { display: inline-block; margin-bottom: 14px; font: 600 .78rem var(--mono); color: var(--gold); letter-spacing: .06em; padding: 3px 9px; border: 1px solid rgb(233 196 106 / .3); border-radius: 6px; }
+.h2-mittel { font-size: clamp(2rem, 4.4vw, 3.2rem); }
+@media (max-width: 700px) { .urteil { padding: 22px 20px; } .rp-rechts .day { display: none; } }
