@@ -32,3 +32,19 @@ Gleicher Server wie die BMIH-Seite, davor der vorhandene System-Caddy:
 3. Block aus `deploy/Caddyfile.verfassungsschutz` an `/etc/caddy/Caddyfile` anhängen (vorher Backup),
    `sudo caddy validate --config /etc/caddy/Caddyfile` und `sudo systemctl reload caddy`.
 4. Updates danach: `cd /opt/verfassungsschutz && sudo ./scripts/update.sh`
+
+## Sicherheit
+
+- `deploy/Caddyfile.verfassungsschutz`: HSTS, strenge CSP (keine fremden Skripte, kein Inline-JS), COOP/CORP,
+  keine versteckten Dateien oder Quellordner, nur GET/HEAD, Fehlerseiten ohne Server-Interna, JSON-Zugriffslog.
+- `scripts/update.sh`: zieht nur aus diesem Repo, kopiert keine Symlinks und keine versteckten Dateien,
+  `site/` gehört root und ist für Caddy nur lesbar.
+- Geänderten Caddy-Block einspielen (mit Backup, bei Fehler zurück):
+
+  ```
+  BK=/etc/caddy/Caddyfile.vor-haertung.$(date +%Y%m%d%H%M%S); sudo cp /etc/caddy/Caddyfile "$BK"
+  # alten Block verfassungsschutz.duckdns.org { … } in /etc/caddy/Caddyfile durch den neuen ersetzen
+  sudo caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile && sudo systemctl reload caddy || sudo cp "$BK" /etc/caddy/Caddyfile
+  ```
+- Interner Code (Login, Dienstportal, Bot, Secrets-Vorlagen) liegt im privaten Repo `verfassungsschutz_private`,
+  nie hier. Keine Tokens, Passwörter oder Server-Zugänge in dieses öffentliche Repo.

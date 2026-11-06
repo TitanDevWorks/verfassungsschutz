@@ -1,20 +1,64 @@
 # Block für den System-Caddy (/etc/caddy/Caddyfile) auf dem Server.
 # Statische Seite, kein Backend. HTTPS holt Caddy automatisch.
+# Änderungen nur mit Backup + `caddy validate` + `systemctl reload caddy` (Caddy nie stoppen).
 verfassungsschutz.duckdns.org {
 	root * /opt/verfassungsschutz/site
 	encode zstd gzip
-	try_files {path} {path}.html
-	file_server
+
+	request_body {
+		max_size 16KB
+	}
+
+	# Versteckte Dateien (.git, .gitignore, .env …) und Quellordner nie ausliefern.
+	# /.well-known bleibt erreichbar (Zertifikate, security.txt).
+	@verborgen {
+		path /.* */.* /deploy/* /scripts/* /README.md /site/*
+		not path /.well-known/*
+	}
+	handle @verborgen {
+		error 404
+	}
+
+	# Rein statische Seite: nur lesende Anfragen annehmen.
+	@schreibend not method GET HEAD OPTIONS
+	handle @schreibend {
+		error 405
+	}
+
+	handle {
+		try_files {path} {path}.html
+		file_server
+	}
 
 	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
 		X-Content-Type-Options nosniff
 		Referrer-Policy strict-origin-when-cross-origin
 		X-Frame-Options DENY
-		Permissions-Policy "camera=(), microphone=(), geolocation=()"
-		Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'"
+		Cross-Origin-Opener-Policy same-origin
+		Cross-Origin-Resource-Policy same-origin
+		X-Permitted-Cross-Domain-Policies none
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), bluetooth=()"
+		# style-src braucht vorerst 'unsafe-inline' (style-Attribute in den Seiten). Skripte bleiben streng.
+		Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; worker-src 'none'; manifest-src 'self'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'none'; upgrade-insecure-requests"
 		X-Robots-Tag "noindex, nofollow"
 		-Server
+		-Via
 	}
 	@static path /assets/*
 	header @static Cache-Control "public, max-age=604800"
+
+	# Fehlerseiten ohne Server-Interna
+	handle_errors {
+		respond "{err.status_code} {err.status_text}"
+	}
+
+	# Zugriffsprotokoll als JSON (Grundlage für fail2ban, sobald es einen Login gibt)
+	log {
+		output file /var/log/caddy/verfassungsschutz.log {
+			roll_size 10MiB
+			roll_keep 5
+		}
+		format json
+	}
 }
