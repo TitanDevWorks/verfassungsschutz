@@ -28,7 +28,6 @@
     <header class="site-header"><div class="container head-row">
       <a class="logo" href="index.html" aria-label="Bundesamt für Verfassungsschutz, zur Startseite">
         <span class="flag" aria-hidden="true"><i></i><i></i><i></i></span>
-        <img class="wappen" src="assets/marke/wappen-animiert.svg" alt="" width="30" height="35">
         <span class="words">Bundesamt für<br>Verfassungsschutz<small>BfV · Köln · Berlin</small></span>
       </a>
       <nav class="mainnav" id="mainnav" aria-label="Hauptnavigation">${links}</nav>
@@ -42,7 +41,7 @@
     <footer class="footer"><div class="container">
       <div class="foot-grid">
         <div>
-          <a class="logo" href="index.html"><span class="flag" aria-hidden="true"><i></i><i></i><i></i></span><img class="wappen" src="assets/marke/wappen.svg" alt="" width="30" height="35">
+          <a class="logo" href="index.html"><span class="flag" aria-hidden="true"><i></i><i></i><i></i></span>
             <span class="words">Bundesamt für<br>Verfassungsschutz<small>Im Geschäftsbereich des BMIH</small></span></a>
           <p class="claim">Nachrichtendienst des Bundes für Terror-, Spionage- und Cyberabwehr. Unter der Fach- und Rechtsaufsicht des Bundesministeriums für Inneres und Heimat.</p>
         </div>
