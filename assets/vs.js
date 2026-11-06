@@ -122,7 +122,12 @@
       if (!e.isIntersecting) return;
       sub.querySelectorAll('a.on').forEach(a => a.classList.remove('on'));
       const a = map.get(e.target);
-      if (a) { a.classList.add('on'); a.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); }
+      if (a) {
+        a.classList.add('on');
+        // Nur die Leiste waagerecht nachführen. scrollIntoView würde bei der sticky Leiste auch die Seite verschieben.
+        const c = a.parentElement, cr = c.getBoundingClientRect(), ar = a.getBoundingClientRect();
+        c.scrollTo({ left: c.scrollLeft + ar.left - cr.left - (cr.width - ar.width) / 2, behavior: 'smooth' });
+      }
     }), { rootMargin: '-40% 0px -55% 0px' });
     map.forEach((_, s) => so.observe(s));
   }
@@ -186,7 +191,7 @@
       return a;
     }));
     filtern('entscheidungen', urteile);
-    if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    if (location.hash && scrollY < 80) document.getElementById(location.hash.slice(1))?.scrollIntoView(); // nur wenn noch nicht selbst gescrollt
   }).catch(() => leerText(urteile, 'Die Entscheidungssammlung ist gerade nicht erreichbar.'));
 
   const einst = document.querySelector('[data-api="einstufungen"]');
@@ -213,6 +218,6 @@
       a.append(t, d);
       return a;
     }));
-    if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    if (location.hash && scrollY < 80) document.getElementById(location.hash.slice(1))?.scrollIntoView(); // nur wenn noch nicht selbst gescrollt
   }).catch(() => {});
 })();
