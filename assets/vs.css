@@ -450,7 +450,6 @@ a.card:hover, .card.lift:hover { border-color: var(--line-2); transform: transla
 @media (min-width: 1101px) { .grid-3 > :last-child:nth-child(3n+1) { grid-column: 1 / -1; } }
 
 /* Wappen im Kopf und Dienstportal-Link */
-.logo .wappen { width: 30px; height: 35px; align-self: center; filter: drop-shadow(0 4px 10px rgb(0 0 0 / .6)); }
 .rp-rechts { display: inline-flex; align-items: center; gap: 16px; }
 .dienst-link { color: var(--text-2); text-decoration: none; font-weight: 500; padding: 3px 10px; border: 1px solid var(--line-2); border-radius: 99px; transition: border-color .2s, color .2s; }
 .dienst-link:hover { color: var(--text); border-color: var(--gold); }
