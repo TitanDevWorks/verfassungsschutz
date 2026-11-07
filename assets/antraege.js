@@ -260,6 +260,8 @@
     const h = new URLSearchParams(location.hash.slice(1));
     if (h.get('nr')) form.elements.nr.value = h.get('nr');
     if (h.get('code')) form.elements.code.value = h.get('code');
+    // Abrufcode nicht in Adresszeile, Verlauf und Lesezeichen stehen lassen (nur die Vorgangsnummer bleibt)
+    if (h.get('code')) history.replaceState(null, '', h.get('nr') ? `#nr=${encodeURIComponent(h.get('nr'))}` : location.pathname);
     let ich = null;
     try { ich = await ruf('GET', '/ich'); } catch {}
     leiste($('[data-ap-leiste]'), { angemeldet: ich?.angemeldet, discordLogin: ich?.discordLogin });
