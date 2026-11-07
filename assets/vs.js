@@ -12,7 +12,8 @@
     ['urteile.html', 'urteile', 'Urteile'],
     ['einstufungen.html', 'einstufungen', 'Einstufungen'],
     ['presse.html', 'presse', 'Presse'],
-    ['antraege.html', 'antraege', 'Anträge']
+    ['antraege.html', 'antraege', 'Anträge'],
+    ['mitspielen.html', 'mitspielen', 'Mitspielen']
   ];
   const links = nav.map(([href, id, label, hot]) =>
     `<a href="${href}"${hot ? ' class="hot"' : ''}${id === page ? ' aria-current="page"' : ''}>${label}</a>`).join('');
@@ -46,8 +47,8 @@
           <p class="claim">Nachrichtendienst des Bundes für Terror-, Spionage- und Cyberabwehr. Unter der Fach- und Rechtsaufsicht des Bundesministeriums für Inneres und Heimat.</p>
         </div>
         <div><h4>Das Amt</h4><ul><li><a href="amt.html">Auftrag und Aufsicht</a></li><li><a href="amt.html#leitung">Amtsleitung</a></li><li><a href="amt.html#personal">Neuaufstellung</a></li><li><a href="aufgaben.html">Arbeitsfelder</a></li></ul></div>
-        <div><h4>Aktuell</h4><ul><li><a href="vsnog.html">VSNOG · Drs. 3/15</a></li><li><a href="vsnog.html#text">Gesetzestext</a></li><li><a href="urteile.html">Urteile des BVerfG</a></li><li><a href="einstufungen.html">Einstufungen</a></li><li><a href="presse.html">Pressemitteilungen</a></li><li><a href="dokumente.html">Amtliche Dokumente</a></li><li><a href="presse.html#fotos">Pressefotos</a></li></ul></div>
-        <div><h4>Service</h4><ul><li><a href="antraege.html">Anträge online</a></li><li><a href="antrag-status.html">Antragsstatus</a></li><li><a href="hinweise.html">Hinweis geben</a></li><li><a href="/dienst/">Dienstportal (intern)</a></li><li><a href="https://bmibund.duckdns.org">BMIH (Ministerium)</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="impressum.html#datenschutz">Datenschutz</a></li></ul></div>
+        <div><h4>Aktuell</h4><ul><li><a href="vsnog.html">VSNOG · Drs. 3/15</a></li><li><a href="vsnog.html#text">Gesetzestext</a></li><li><a href="urteile.html">Urteile des BVerfG</a></li><li><a href="einstufungen.html">Einstufungen</a></li><li><a href="presse.html">Pressemitteilungen</a></li><li><a href="dokumente.html">Amtliche Dokumente</a></li><li><a href="bericht.html">Verfassungsschutzbericht</a></li><li><a href="presse.html#fotos">Pressefotos</a></li></ul></div>
+        <div><h4>Service</h4><ul><li><a href="mitspielen.html">So spielst du mit</a></li><li><a href="antraege.html">Anträge online</a></li><li><a href="antrag-status.html">Antragsstatus</a></li><li><a href="hinweise.html">Hinweis geben</a></li><li><a href="/dienst/">Dienstportal (intern)</a></li><li><a href="https://bmibund.duckdns.org">BMIH (Ministerium)</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="impressum.html#datenschutz">Datenschutz</a></li></ul></div>
       </div>
       <div class="foot-word" aria-hidden="true">Verfassungsschutz</div>
       <div class="foot-bottom">
@@ -215,6 +216,23 @@
     }));
     filtern('einstufungen', einst);
   }).catch(() => leerText(einst, 'Die Liste ist gerade nicht erreichbar.'));
+
+  // Verfassungsschutzbericht: nur Gesamtzahlen
+  const bericht = document.querySelector('[data-api="bericht"]');
+  if (bericht) laden('/api/oeffentlich/bericht').then(b => {
+    const setze = (k, t) => { const x = document.querySelector(`[data-bericht="${k}"]`); if (x) x.textContent = t; };
+    setze('stand', `Stand ${tagD(b.stand)}`); setze('jahr', String(b.jahr));
+    const stat = (n, t) => { const d = el('div', 'stat'); d.append(el('b', null, String(n ?? 0)), el('span', null, t)); return d; };
+    const einstSumme = Object.values(b.einstufungen || {}).reduce((a, n) => a + n, 0);
+    bericht.replaceChildren(stat(b.faelleOffen, 'offene Fälle'), stat(b.faelleAbgeschlossen, 'abgeschlossene Fälle'), stat(einstSumme, 'öffentliche Einstufungen'),
+      stat(b.entscheidungen, 'Urteile und Beschlüsse des BVerfG'), stat(b.antraegeBuerger?.eingegangen, 'Anträge von Bürgerinnen und Bürgern'), stat(b.presse, 'Pressemitteilungen'));
+    const liste = (k, paare, leerT) => {
+      const ul = document.querySelector(`[data-bericht="${k}"]`); if (!ul) return;
+      ul.replaceChildren(...(paare.length ? paare : [[leerT, '']]).map(([name, n]) => { const li = el('li'); const s = el('span'); s.append(el('b', null, name), document.createTextNode(n !== '' ? ` · ${n}` : '')); li.append(s); return li; }));
+    };
+    liste('phaenomene', (b.phaenomene || []).map(x => [x.name, x.offen]), 'Derzeit keine offenen Fälle.');
+    liste('einstufungen', Object.entries(b.einstufungen || {}), 'Derzeit keine öffentliche Einstufung.');
+  }).catch(() => leerText(bericht, 'Der Bericht ist gerade nicht erreichbar.'));
 
   const news = document.querySelector('[data-api="presse"]');
   if (news) laden('/api/oeffentlich/presse').then(({ beitraege: l }) => {
