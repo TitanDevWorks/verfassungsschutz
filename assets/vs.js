@@ -46,7 +46,7 @@
           <p class="claim">Nachrichtendienst des Bundes für Terror-, Spionage- und Cyberabwehr. Unter der Fach- und Rechtsaufsicht des Bundesministeriums für Inneres und Heimat.</p>
         </div>
         <div><h4>Das Amt</h4><ul><li><a href="amt.html">Auftrag und Aufsicht</a></li><li><a href="amt.html#leitung">Amtsleitung</a></li><li><a href="amt.html#personal">Neuaufstellung</a></li><li><a href="aufgaben.html">Arbeitsfelder</a></li></ul></div>
-        <div><h4>Aktuell</h4><ul><li><a href="vsnog.html">VSNOG · Drs. 3/15</a></li><li><a href="vsnog.html#text">Gesetzestext</a></li><li><a href="urteile.html">Urteile des BVerfG</a></li><li><a href="einstufungen.html">Einstufungen</a></li><li><a href="presse.html">Pressemitteilungen</a></li><li><a href="presse.html#fotos">Pressefotos</a></li></ul></div>
+        <div><h4>Aktuell</h4><ul><li><a href="vsnog.html">VSNOG · Drs. 3/15</a></li><li><a href="vsnog.html#text">Gesetzestext</a></li><li><a href="urteile.html">Urteile des BVerfG</a></li><li><a href="einstufungen.html">Einstufungen</a></li><li><a href="presse.html">Pressemitteilungen</a></li><li><a href="dokumente.html">Amtliche Dokumente</a></li><li><a href="presse.html#fotos">Pressefotos</a></li></ul></div>
         <div><h4>Service</h4><ul><li><a href="antraege.html">Anträge online</a></li><li><a href="antrag-status.html">Antragsstatus</a></li><li><a href="hinweise.html">Hinweis geben</a></li><li><a href="/dienst/">Dienstportal (intern)</a></li><li><a href="https://bmibund.duckdns.org">BMIH (Ministerium)</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="impressum.html#datenschutz">Datenschutz</a></li></ul></div>
       </div>
       <div class="foot-word" aria-hidden="true">Verfassungsschutz</div>
@@ -183,6 +183,23 @@
     filtern('entscheidungen', urteile);
     if (location.hash && scrollY < 80) document.getElementById(location.hash.slice(1))?.scrollIntoView(); // nur wenn noch nicht selbst gescrollt
   }).catch(() => leerText(urteile, 'Die Entscheidungssammlung ist gerade nicht erreichbar.'));
+
+  const doks = document.querySelector('[data-api="dokumente"]');
+  if (doks) laden('/api/oeffentlich/dokumente').then(({ dokumente: l }) => {
+    if (!l.length) return leerText(doks, 'Noch kein Dokument öffentlich bekanntgegeben.');
+    doks.replaceChildren(...l.map((d, i) => {
+      const a = el('article', 'urteil reveal in');
+      a.dataset.text = `${d.nr} ${d.typName} ${d.titel} ${d.behoerde}`.toLowerCase();
+      a.style.setProperty('--d', `${Math.min(i, 6) * 0.05}s`);
+      const kopf = el('header', 'urteil-kopf');
+      kopf.append(el('span', 'az', d.nr || '–'), el('span', 'tag gold', d.typName), el('time', 'mono', tagD(d.datum)));
+      const link = el('a', 'btn', 'Dokument öffnen'); link.href = String(d.url).startsWith('/api/oeffentlich/dokumente/') ? d.url : '#';
+      const fuss = el('footer', 'urteil-fuss'); fuss.append(el('span', null, d.behoerde), link);
+      a.append(kopf, el('h3', null, d.titel), fuss);
+      return a;
+    }));
+    filtern('dokumente', doks);
+  }).catch(() => leerText(doks, 'Die Bekanntmachungen sind gerade nicht erreichbar.'));
 
   const einst = document.querySelector('[data-api="einstufungen"]');
   if (einst) laden('/api/oeffentlich/einstufungen').then(({ einstufungen: l }) => {
