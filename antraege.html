@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anträge online · Bundesamt für Verfassungsschutz · fiktiv</title>
+  <meta name="description" content="Anträge, Hinweise, Widersprüche und Anfragen online an das Bundesamt für Verfassungsschutz stellen (fiktiv, Rollenspiel).">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#07080a">
+  <link rel="icon" href="assets/emblem.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vs.css?v=5">
+</head>
+<body data-page="antraege">
+  <main id="main">
+    <section class="page-head">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="container">
+        <nav class="crumbs" aria-label="Brotkrumen"><a href="index.html">Start</a> / Anträge online</nav>
+        <h1 class="reveal">Anträge <span class="s">online.</span></h1>
+        <p class="reveal" style="--d:.05s">Hinweise, Auskunftsersuchen, Widersprüche, Sicherheitsüberprüfungen, Presse- und Parlamentsanfragen: Alles, was das Bundesamt erreichen soll, reichen Sie hier ein. Ihr Antrag geht direkt an die zuständige Stelle, und Sie verfolgen ihn mit Vorgangsnummer und Abrufcode.</p>
+      </div>
+    </section>
+
+    <section class="section" data-ap-portal>
+      <div class="container">
+        <div class="ap-leiste reveal" data-ap-leiste><p>Lädt …</p></div>
+        <div class="ap-layout">
+          <div data-ap-liste aria-label="Antragsarten"><p class="lade">Antragsarten werden geladen …</p></div>
+          <div class="ap-formular" id="ap-formular" data-ap-formular aria-live="polite">
+            <div class="ap-leer"><div><p style="margin:0 0 6px;color:var(--text-2)">Wählen Sie links, was Sie beantragen möchten.</p><p style="margin:0">Pflichtfelder sind mit <span style="color:var(--gold)">*</span> markiert.</p></div></div>
+          </div>
+        </div>
+
+        <div id="meine" data-ap-meine hidden style="margin-top:72px;scroll-margin-top:110px">
+          <div class="section-head"><div><span class="kicker">Mit Discord angemeldet</span><h2 class="h2-mittel">Meine <span class="s">Anträge</span></h2></div><a class="more" href="antrag-status.html">Status mit Code abfragen</a></div>
+          <div class="ap-liste" data-ap-meine-liste><p class="lade">Wird geladen …</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container two">
+        <div>
+          <span class="kicker">So geht es weiter</span>
+          <h2 class="h2-mittel">Vom Eingang <span class="s">zum Bescheid.</span></h2>
+        </div>
+        <ul class="list-plain">
+          <li><span><b>Eingang.</b> Sie erhalten sofort eine Vorgangsnummer und einen Abrufcode. Der Antrag liegt im Eingangskorb der zuständigen Stelle.</span></li>
+          <li><span><b>Prüfung.</b> Die Stelle prüft Zuständigkeit und Vollständigkeit. Fehlt etwas, stellt sie eine Rückfrage, die Sie auf der Statusseite beantworten.</span></li>
+          <li><span><b>Entscheidung.</b> Den Bescheid oder die Antwort sehen Sie auf der Statusseite. Mit Discord-Anmeldung kommt zusätzlich eine Direktnachricht.</span></li>
+          <li><span><b>Rechtsbehelf.</b> Gegen Verfügungen ist Widerspruch möglich, danach die Klage beim Bundesverfassungsgericht. Beides stellen Sie ebenfalls hier.</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <script src="assets/vs.js?v=6"></script>
+  <script src="assets/antraege.js?v=1"></script>
+</body>
+</html>
