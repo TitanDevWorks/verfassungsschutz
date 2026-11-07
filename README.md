@@ -14,10 +14,12 @@ Statische Seite ohne Build-Schritt und ohne Backend, gleiche Gestaltung wie die 
 | `aufgaben.html` | Arbeitsfelder: Terror, Spionage/Sabotage, Cyber, gewaltbereiter Extremismus |
 | `vsnog.html` | VSNOG, Drucksache 3/15: Kurz erklärt, Vorher/Nachher, Kernpunkte, Zeitplan, FAQ, Wortlaut |
 | `presse.html` | Pressemitteilungen und Pressefotos (Großansicht, JPG-Download) |
-| `hinweise.html` | Hinweisformular (Rollenspiel: sendet und speichert nichts) |
+| `antraege.html` | Antragsportal: 13 Antragsarten, Formulare aus `/api/oeffentlich/eingang/arten`, Eingangsbestätigung mit Vorgangsnummer und Abrufcode, optional Discord-Anmeldung („Meine Anträge“) |
+| `antrag-status.html` | Statusabfrage mit Vorgangsnummer + Abrufcode (im URL-Fragment), Rückfragen beantworten |
+| `hinweise.html` | Hinweisformular, sendet über das Antragsportal an die zuständige Fachabteilung |
 | `impressum.html` | Impressum, Fiktionshinweis, Datenschutz |
 
-Kopf und Fuß kommen aus `assets/vs.js`, die Gestaltung aus `assets/vs.css`.
+Kopf und Fuß kommen aus `assets/vs.js`, die Gestaltung aus `assets/vs.css`, das Antragsportal aus `assets/antraege.js` (Backend im privaten Repo, `server/src/api/eingang-oeffentlich.js`).
 Pressefotos stammen aus `bmibund/assets/presse/fiedel/` (KI-generiert, fiktiv).
 
 Lokal ansehen: `python3 -m http.server 8080`

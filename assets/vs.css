@@ -483,3 +483,83 @@ a.card:hover, .card.lift:hover { border-color: var(--line-2); transform: transla
 .register { display: inline-block; margin-bottom: 14px; font: 600 .78rem var(--mono); color: var(--gold); letter-spacing: .06em; padding: 3px 9px; border: 1px solid rgb(233 196 106 / .3); border-radius: 6px; }
 .h2-mittel { font-size: clamp(2rem, 4.4vw, 3.2rem); }
 @media (max-width: 700px) { .urteil { padding: 22px 20px; } .rp-rechts .day { display: none; } }
+
+/* Antragsportal */
+.ap-leiste { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; padding: 18px 22px; margin-bottom: 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.ap-leiste p { margin: 0; color: var(--text-2); font-size: .92rem; }
+.ap-leiste b { color: var(--text); font-weight: 500; }
+.ap-leiste .ap-knoepfe { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-discord svg { width: 18px; height: 18px; }
+.ap-layout { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr); gap: 48px; align-items: start; }
+.ap-gruppe + .ap-gruppe { margin-top: 34px; }
+.ap-gruppe h2 { margin-bottom: 12px; color: var(--text-3); font: 500 .72rem var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.ap-arten { display: grid; gap: 8px; }
+.ap-art { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; width: 100%; padding: 16px 18px; text-align: left; border: 1px solid var(--line); border-radius: 14px; background: transparent; color: var(--text); font: inherit; cursor: pointer; transition: border-color .2s, background .2s, transform .3s var(--ease); }
+.ap-art:hover { border-color: var(--line-2); background: rgb(255 255 255 / .02); }
+.ap-art[aria-pressed="true"] { border-color: rgb(233 196 106 / .5); background: rgb(233 196 106 / .05); }
+.ap-art b { font-weight: 500; }
+.ap-art small { grid-column: 1 / -1; color: var(--text-3); font-size: .84rem; line-height: 1.5; }
+.ap-art .ap-frist { align-self: start; color: var(--text-3); font: 500 .72rem var(--mono); white-space: nowrap; }
+.ap-formular { position: sticky; top: 100px; }
+.ap-formular .form { gap: 18px; }
+.ap-kopf { display: grid; gap: 6px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.ap-kopf h2 { font-size: 1.6rem; }
+.ap-kopf p { margin: 0; color: var(--text-2); font-size: .92rem; }
+.ap-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.form .hilfe { color: var(--text-3); font-size: .8rem; }
+.form .pflicht::after { content: " *"; color: var(--gold); }
+.form .check { display: flex; gap: 12px; align-items: flex-start; color: var(--text-2); font-size: .88rem; cursor: pointer; }
+.form .check input { width: 18px; height: 18px; margin: 2px 0 0; padding: 0; flex-shrink: 0; accent-color: var(--gold); }
+.form .zaehler { justify-self: end; margin-top: -4px; color: var(--text-3); font: 500 .72rem var(--mono); }
+.form .trenner { height: 1px; background: var(--line); margin: 4px 0; }
+.form .fehler { padding: 12px 16px; border-radius: 12px; border: 1px solid rgb(229 72 77 / .3); background: rgb(229 72 77 / .08); color: #ff8b8e; font-size: .9rem; }
+.form button[disabled] { opacity: .55; cursor: progress; transform: none; }
+.ap-honig { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.ap-leer { display: grid; place-items: center; min-height: 340px; padding: 34px; text-align: center; border: 1px dashed var(--line-2); border-radius: 22px; color: var(--text-3); }
+.ap-quittung { display: grid; gap: 18px; padding: 34px; border: 1px solid rgb(70 167 88 / .35); border-radius: 22px; background: linear-gradient(180deg, rgb(70 167 88 / .07), transparent 60%), var(--surface); }
+.ap-quittung h2 { font-size: 1.6rem; }
+.ap-quittung p { margin: 0; color: var(--text-2); }
+.ap-werte { display: grid; gap: 10px; }
+.ap-wert { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 14px 18px; border: 1px solid var(--line-2); border-radius: 14px; background: var(--bg-2); }
+.ap-wert span { color: var(--text-3); font-size: .8rem; }
+.ap-wert code { font: 600 1.12rem var(--mono); color: var(--gold); letter-spacing: .04em; overflow-wrap: anywhere; }
+.ap-wert button { padding: 6px 12px; font-size: .8rem; }
+.ap-warn { padding: 12px 16px; border-radius: 12px; border: 1px solid rgb(233 196 106 / .3); background: rgb(233 196 106 / .06); color: var(--text-2); font-size: .88rem; }
+.ap-warn b { color: var(--gold); font-weight: 500; }
+
+/* Vorgangsstatus */
+.ap-status { display: grid; gap: 22px; }
+.ap-status-kopf { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between; }
+.ap-status-kopf .nr { font: 600 1.15rem var(--mono); color: var(--gold); }
+.ap-status h2 { font-size: 1.5rem; }
+.ap-schritte { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; list-style: none; margin: 0; padding: 0; }
+.ap-schritte li { display: grid; gap: 8px; color: var(--text-3); font-size: .78rem; }
+.ap-schritte li::before { content: ""; height: 3px; border-radius: 3px; background: var(--line-2); }
+.ap-schritte li.an { color: var(--text); }
+.ap-schritte li.an::before { background: var(--gold); }
+.ap-schritte li.rot::before { background: var(--red); }
+.ap-daten { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 0; }
+.ap-daten div { padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; }
+.ap-daten dt { color: var(--text-3); font-size: .74rem; }
+.ap-daten dd { margin: 2px 0 0; }
+.ap-verlauf { display: grid; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.ap-nachricht { padding: 14px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg-2); }
+.ap-nachricht.bfv { border-color: rgb(233 196 106 / .25); }
+.ap-nachricht header { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 6px; color: var(--text-3); font-size: .78rem; }
+.ap-nachricht header b { color: var(--text-2); font-weight: 500; }
+.ap-nachricht p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.ap-liste { display: grid; gap: 8px; }
+.ap-liste a { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px 16px; align-items: center; padding: 14px 18px; border: 1px solid var(--line); border-radius: 14px; text-decoration: none; transition: border-color .2s; }
+.ap-liste a:hover { border-color: var(--line-2); }
+.ap-liste .nr { font: 600 .86rem var(--mono); color: var(--gold); }
+.ap-liste .was { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); }
+@media (max-width: 1100px) {
+  .ap-layout { grid-template-columns: 1fr; gap: 36px; }
+  .ap-formular { position: static; }
+}
+@media (max-width: 720px) {
+  .ap-quittung { padding: 24px; }
+  .ap-schritte { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ap-liste a { grid-template-columns: 1fr auto; }
+  .ap-liste .was { grid-column: 1 / -1; grid-row: 2; }
+}

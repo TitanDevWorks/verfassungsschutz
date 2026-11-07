@@ -12,7 +12,7 @@
     ['urteile.html', 'urteile', 'Urteile'],
     ['einstufungen.html', 'einstufungen', 'Einstufungen'],
     ['presse.html', 'presse', 'Presse'],
-    ['hinweise.html', 'hinweise', 'Hinweise']
+    ['antraege.html', 'antraege', 'Anträge']
   ];
   const links = nav.map(([href, id, label, hot]) =>
     `<a href="${href}"${hot ? ' class="hot"' : ''}${id === page ? ' aria-current="page"' : ''}>${label}</a>`).join('');
@@ -47,7 +47,7 @@
         </div>
         <div><h4>Das Amt</h4><ul><li><a href="amt.html">Auftrag und Aufsicht</a></li><li><a href="amt.html#leitung">Amtsleitung</a></li><li><a href="amt.html#personal">Neuaufstellung</a></li><li><a href="aufgaben.html">Arbeitsfelder</a></li></ul></div>
         <div><h4>Aktuell</h4><ul><li><a href="vsnog.html">VSNOG · Drs. 3/15</a></li><li><a href="vsnog.html#text">Gesetzestext</a></li><li><a href="urteile.html">Urteile des BVerfG</a></li><li><a href="einstufungen.html">Einstufungen</a></li><li><a href="presse.html">Pressemitteilungen</a></li><li><a href="presse.html#fotos">Pressefotos</a></li></ul></div>
-        <div><h4>Service</h4><ul><li><a href="hinweise.html">Hinweis geben</a></li><li><a href="/dienst/">Dienstportal (intern)</a></li><li><a href="https://bmibund.duckdns.org">BMIH (Ministerium)</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="impressum.html#datenschutz">Datenschutz</a></li></ul></div>
+        <div><h4>Service</h4><ul><li><a href="antraege.html">Anträge online</a></li><li><a href="antrag-status.html">Antragsstatus</a></li><li><a href="hinweise.html">Hinweis geben</a></li><li><a href="/dienst/">Dienstportal (intern)</a></li><li><a href="https://bmibund.duckdns.org">BMIH (Ministerium)</a></li><li><a href="impressum.html">Impressum</a></li><li><a href="impressum.html#datenschutz">Datenschutz</a></li></ul></div>
       </div>
       <div class="foot-word" aria-hidden="true">Verfassungsschutz</div>
       <div class="foot-bottom">
@@ -146,15 +146,6 @@
     dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
   }
 
-  // Hinweisformular: im Rollenspiel nur Bestätigung, nichts wird gesendet
-  document.querySelectorAll('form[data-rp]').forEach(f => f.addEventListener('submit', e => {
-    e.preventDefault();
-    const nr = 'BfV-' + new Date().getFullYear() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase();
-    const out = f.querySelector('[data-nr]');
-    if (out) out.textContent = nr;
-    f.classList.add('sent');
-    f.querySelector('button[type=submit]').disabled = true;
-  }));
   // Live-Daten aus dem Dienstportal: verkündete Entscheidungen, öffentliche Einstufungen, freigegebene Pressemitteilungen.
   // Nur Text (textContent), nie HTML aus der Datenbank.
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };

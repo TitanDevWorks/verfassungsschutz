@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Antragsstatus · Bundesamt für Verfassungsschutz · fiktiv</title>
+  <meta name="description" content="Stand eines Antrags beim Bundesamt für Verfassungsschutz abfragen (fiktiv, Rollenspiel).">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#07080a">
+  <link rel="icon" href="assets/emblem.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vs.css?v=5">
+</head>
+<body data-page="antraege">
+  <main id="main">
+    <section class="page-head">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="container">
+        <nav class="crumbs" aria-label="Brotkrumen"><a href="index.html">Start</a> / <a href="antraege.html">Anträge online</a> / Status</nav>
+        <h1 class="reveal">Wo steht <span class="s">mein Antrag?</span></h1>
+        <p class="reveal" style="--d:.05s">Mit Vorgangsnummer und Abrufcode aus Ihrer Eingangsbestätigung sehen Sie den Bearbeitungsstand, lesen Rückfragen und antworten darauf.</p>
+      </div>
+    </section>
+
+    <section class="section" data-ap-status>
+      <div class="container">
+        <div class="ap-leiste reveal" data-ap-leiste><p>Lädt …</p></div>
+        <div class="ap-layout">
+          <form class="form" data-ap-abfrage novalidate autocomplete="off">
+            <div class="lage-head" style="margin:0"><span>Statusabfrage</span><span>Vertraulich</span></div>
+            <label for="s-nr"><span class="pflicht">Vorgangsnummer</span><input id="s-nr" name="nr" placeholder="BfV-E-2026-00001" maxlength="40" spellcheck="false"></label>
+            <label for="s-code"><span class="pflicht">Abrufcode</span><input id="s-code" name="code" placeholder="XXXX-XXXX-XXXX" maxlength="20" spellcheck="false" class="mono"></label>
+            <p class="fehler" role="alert" hidden></p>
+            <button class="btn btn-primary" type="submit" style="justify-self:start">Status abfragen</button>
+            <p class="note">Nach mehreren falschen Codes wird die Abfrage für einige Minuten gesperrt. Den Abrufcode kann das Bundesamt nicht wiederherstellen.</p>
+          </form>
+          <div data-ap-ergebnis aria-live="polite"></div>
+        </div>
+        <div id="meine" data-ap-meine hidden style="margin-top:72px;scroll-margin-top:110px">
+          <div class="section-head"><div><span class="kicker">Mit Discord angemeldet</span><h2 class="h2-mittel">Meine <span class="s">Anträge</span></h2></div><a class="more" href="antraege.html">Neuer Antrag</a></div>
+          <div class="ap-liste" data-ap-meine-liste><p class="lade">Wird geladen …</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="assets/vs.js?v=6"></script>
+  <script src="assets/antraege.js?v=1"></script>
+</body>
+</html>
